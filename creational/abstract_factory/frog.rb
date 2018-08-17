@@ -1,0 +1,2 @@
+class Frog < Animal
+end
