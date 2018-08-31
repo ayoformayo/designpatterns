@@ -1,52 +1,71 @@
 // http://eloquentjavascript.net/06_object.html
-class Matrix {
-  constructor(width, height, element = (x, y) => undefined) {
-    this.width = width;
-    this.height = height;
-    this.content = [];
 
-    for (let y = 0; y < height; y++) {
-      for (let x = 0; x < width; x++) {
-        this.content[y * width + x] = element(x, y);
-      }
-    }
-  }
-
-  get(x, y) {
-    return this.content[y * this.width + x];
-  }
-  set(x, y, value) {
-    this.content[y * this.width + x] = value;
+class Lion {
+  constructor(weight, age) {
+    this.weight = weight
+    this.age = age
   }
 }
 
-class MatrixIterator {
-  constructor(matrix) {
-    this.x = 0;
-    this.y = 0;
-    this.matrix = matrix;
+class Tiger {
+  constructor(weight, age) {
+    this.weight = weight
+    this.age = age
+  }
+}
+
+class Bear {
+  constructor(weight, age) {
+    this.weight = weight
+    this.age = age
+  }
+}
+
+class OhMy {
+  constructor(weight, age) {
+    this.weight = weight
+    this.age = age
+  }
+}
+
+class Zoo {
+  constructor(animals) {
+    this.animals = animals
+  }
+}
+
+class Zookeeper {
+  constructor(zoo) {
+    this.i = 0;
+    this.zoo = zoo;
+    console.log("")
   }
 
   next() {
-    if (this.y == this.matrix.height) return {done: true};
+    if (this.i >= this.zoo.animals.length) return {done: true};
 
-    let value = {x: this.x,
-                 y: this.y,
-                 value: this.matrix.get(this.x, this.y)};
-    this.x++;
-    if (this.x == this.matrix.width) {
-      this.x = 0;
-      this.y++;
-    }
+    let value = {
+      i: this.i,
+      value: this.zoo.animals[this.i]
+    };
+
+    this.i++;
     return {value, done: false};
   }
 }
 
-Matrix.prototype[Symbol.iterator] = function() {
-  return new MatrixIterator(this);
+Zoo.prototype[Symbol.iterator] = function() {
+  return new Zookeeper(this);
 };
 
-let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
-for (let {x, y, value} of matrix) {
-  console.log(x, y, value);
+let animals = [
+  new Lion(100, 3),
+  new Tiger(200, 9),
+  new Bear(700, 5),
+  new OhMy(300, 2),
+]
+
+let zoo = new Zoo(animals);
+for (let {i, value} of zoo) {
+  console.log(i, value);
 }
