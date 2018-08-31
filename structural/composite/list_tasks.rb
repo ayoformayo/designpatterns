@@ -30,15 +30,6 @@ class AddLiquidsTask < Task
   end
 end
 
-class MakeBatterTask < CompositeTask
-  def initialize
-    super('Make batter')
-    add_sub_task(AddDryIngredientsTask.new)
-    add_sub_task(AddLiquidsTask.new)
-    add_sub_task(MixTask.new)
-  end
-end
-
 class FillPanTask < Task
   def initialize
     super('Fill pan')
@@ -79,6 +70,15 @@ class LickSpoonTask < Task
   end
 end
 
+class MakeBatterTask < CompositeTask
+  def initialize
+    super('Make batter')
+    add_sub_task(AddDryIngredientsTask.new)
+    add_sub_task(AddLiquidsTask.new)
+    add_sub_task(MixTask.new)
+  end
+end
+
 class MakeCakeTask < CompositeTask
   def initialize
     super('Make cake')
@@ -89,3 +89,5 @@ class MakeCakeTask < CompositeTask
     add_sub_task(LickSpoonTask.new)
   end
 end
+
+p MakeCakeTask.new.get_time_required
